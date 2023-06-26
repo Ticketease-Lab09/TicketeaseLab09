@@ -4,7 +4,7 @@ const userModel = require('./users.model.js');
 const CustomerTicketModel = require('./CustomerTicket.model.js');
 const AgentTicketModel = require ('./AgentTicket.model.js');
 const { Sequelize, DataTypes } = require('sequelize');
-
+const Collection = require('./DataCollection.js')
 
 
 
@@ -44,12 +44,14 @@ AgentTicketTable.belongsTo(userTable, {
   targetKey: 'id',
 });
 
+const customerCollection = new Collection(CustomerTicketTable);
+const agentCollection = new Collection(AgentTicketTable);
 
 
 
 module.exports = {
   db: sequelize,
   users: userTable,
-  AgentTicket : AgentTicketTable,
-  CustomerTicket : CustomerTicketTable
+  AgentTicket : agentCollection,
+  CustomerTicket : customerCollection
 }
