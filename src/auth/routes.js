@@ -23,12 +23,19 @@ authRouter.post('/signup', async (req, res, next) => {
 });
 
 authRouter.post('/signin', basicAuth, (req, res, next) => {
-  const user = {
-    user: req.user,
-    token: req.user.token
-  };
-  res.status(201).json(user);
+  try {
+    const user = {
+      user: req.user,
+      token: req.user.token
+    };
+    res.status(201).json(user);
+  } catch (error) {
+    // Handle JWT decoding errors here
+    console.error('JWT Decoding Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
 
 authRouter.get('/users', bearerAuth, permissions('delete'), async (req, res, next) => {
   const userRecords = await users.findAll({});

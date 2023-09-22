@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(authRoutes);
-app.use(v1Routes);
+// app.use(v1Routes);
 app.use(vRoutes);
 
 app.get('/', welcomeHandler);

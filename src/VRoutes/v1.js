@@ -16,11 +16,11 @@ v1Routes.param('model', (req, res, next) => {
   }
 });
 
-v1Routes.get('/ticket/:model', handleGetAll);
-v1Routes.get('/ticket/:model/:id', handleGetOne);
-v1Routes.post('/ticket/:model', handleCreate);
-v1Routes.put('/ticket/:model/:id', handleUpdate);
-v1Routes.delete('/ticket/:model/:id', handleDelete);
+v1Routes.get('/task/:model', handleGetAll);
+v1Routes.get('/task/:model/:id', handleGetOne);
+v1Routes.post('/task/:model', handleCreate);
+v1Routes.put('/task/:model/:id', handleUpdate);
+v1Routes.delete('/task/:model/:id', handleDelete);
 
 
 async function handleGetAll(req, res) {

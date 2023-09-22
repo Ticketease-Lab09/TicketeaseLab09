@@ -1,8 +1,7 @@
 'use strict';
 require('dotenv').config();
 const userModel = require('./users.model.js');
-const CustomerTicketModel = require('./CustomerTicket.model.js');
-const AgentTicketModel = require ('./AgentTicket.model.js');
+const TaskModel = require ('./tasks.model.js');
 const { Sequelize, DataTypes } = require('sequelize');
 const Collection = require('./DataCollection.js')
 
@@ -21,37 +20,28 @@ const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
 const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 
 
-const CustomerTicketTable = CustomerTicketModel(sequelize, DataTypes);
-const AgentTicketTable = AgentTicketModel(sequelize, DataTypes);
+const TaskTable = TaskModel(sequelize, DataTypes);
 const userTable = userModel(sequelize, DataTypes);
 
 
-userTable.hasMany(CustomerTicketTable, {
-    foreignKey: 'UserId',
-    sourceKey: 'id',
-});
-CustomerTicketTable.belongsTo(userTable, {
-    foreignKey: 'UserId',
-    targetKey: 'id',
-});
-
-userTable.hasMany(AgentTicketTable, {
+userTable.hasMany(TaskTable, {
   foreignKey: 'UserId',
   sourceKey: 'id',
 });
-AgentTicketTable.belongsTo(userTable, {
+
+TaskTable.belongsTo(userTable, {
   foreignKey: 'UserId',
   targetKey: 'id',
 });
 
-const customerCollection = new Collection(CustomerTicketTable);
-const agentCollection = new Collection(AgentTicketTable);
+
+
+const taskCollection = new Collection(TaskTable);
 
 
 
 module.exports = {
   db: sequelize,
   users: userTable,
-  AgentTicket : agentCollection,
-  CustomerTicket : customerCollection
+  tasks : taskCollection,
 }
